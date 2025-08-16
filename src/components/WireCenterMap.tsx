@@ -1,6 +1,4 @@
 import Box from "@mui/material/Box";
-import { useContext } from "react";
-// import WireCenterContext from "../state/WireCenterContext";
 import Typography from "@mui/material/Typography";
 import useWireCenterContext from "../state/WireCenterContext";
 

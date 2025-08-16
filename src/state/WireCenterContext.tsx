@@ -1,4 +1,8 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import latLonData from "../data/clli-lat-lon.txt";
+import npaNxxData from "../data/clli-npa-nxx.txt";
+import { parseWireCenterData } from "../utils/dataReader";
+import { WireCenter } from "../types/WireCenter.types";
 
 export type WireCenterContextType = {
   wireCenterList: WireCenter[];
@@ -13,34 +17,23 @@ const WireCenterContext = createContext<WireCenterContextType | undefined>(
   undefined
 );
 
-// export default WireCenterContext;
-
 export const WireCenterProvider: React.FC<WireCenterProviderProps> = ({
   children,
 }) => {
   const [wireCenterList, setWireCenterList] = useState<WireCenter[]>([]);
 
   useEffect(() => {
-    setWireCenterList([
-      {
-        clli: "CLLI 1",
-        lat: 0,
-        lon: 0,
-        npaMap: new Map(),
-      },
-      {
-        clli: "CLLI 2",
-        lat: 0,
-        lon: 0,
-        npaMap: new Map(),
-      },
-      {
-        clli: "CLLI 3",
-        lat: 0,
-        lon: 0,
-        npaMap: new Map(),
-      },
-    ]);
+    try {
+        const parsedWireCenterList: WireCenter[] = parseWireCenterData(
+            latLonData,
+            npaNxxData,
+        );
+
+        setWireCenterList(parsedWireCenterList);
+    }
+    catch(err) {
+        console.error(err);
+    }
   }, []);
   // const parsedData = parseWireCenterData(
   //   latLonData.default,

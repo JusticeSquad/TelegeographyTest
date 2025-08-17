@@ -13,10 +13,10 @@ const WireCenterDataTable: React.FC = () => {
     }
 
     return (
-        <Box>
-            {wireCenterContextData.wireCenterList.map((wireCenter) =>
-                <Typography>
-                    {wireCenter.clli}
+        <Box id="wire-center-data-table-panel">
+            {wireCenterContextData.wireCenterList.map((wc) =>
+                <Typography key={wc.clli}>
+                    {wc.clli} - {(typeof wc.globalPos.lon === "number" && typeof wc.globalPos.lat === "number") ? `${wc.globalPos.lon.toFixed(2)}, ${wc.globalPos.lat.toFixed(2)}` : "error"}
                 </Typography>
             )}
         </Box>

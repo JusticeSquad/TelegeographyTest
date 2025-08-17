@@ -4,7 +4,7 @@ import WireCenterMap from "./WireCenterMap";
 
 const WireCenterContentPanel: React.FC = () => {
     return (
-        <Box>
+        <Box id="wire-center-content-panel">
             <WireCenterDataTable />
             <WireCenterMap />
         </Box>

@@ -1,0 +1,38 @@
+#wire-center-content-panel {
+    display: flex;
+    gap: 20px;
+}
+
+#wire-center-data-table-panel {
+    flex: 0 1 400px;
+    min-width: 200px;
+
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#wire-center-map-panel {
+    flex: 1 1 0;
+
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#wire-center-map-wrapper {
+    overflow: hidden;
+}
+
+@media (max-width: 800px) {
+    #wire-center-data-table-panel {
+        flex: 1 1 0;
+    }
+}
+
+.mapboxgl-popup-content {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+    border-radius: 4px;
+}
+
+wire-center-map-popup-content-wrapper {
+    margin: 8px 8px 0 0;
+}

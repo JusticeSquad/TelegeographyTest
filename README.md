@@ -1,6 +1,6 @@
 # TeleGeography Test App
 
-Welcome to the TeleGeography Test App. This app loads data files representing wire center locations and the NPA/NXX combinations they serve. Users can view these in the data table, find them on the map, and use the filter bar to search by CLLI or NPA.
+Welcome to the TeleGeography Test App. This app loads data files representing wire center locations and the NPA/NXX combinations they serve. Users can view these in the data table, find them on the map, use the data table to find specific wire centers on the map, and use the filter bar to search by CLLI or NPA. This app uses React/Typescript, Context for state management between components, Mapbox and ReactMapGL for controlling the map, and MaterialUI for various interface elements.
 
 # Running the App
 

@@ -1,3 +1,5 @@
+export const CLLI_PRIMARY_LENGTH = 8;
+
 export type GlobalPos = {
     lat: number;
     lon: number;
@@ -5,7 +7,11 @@ export type GlobalPos = {
 
 export type Npa = string;
 export type Nxx = string;
-export type NpaMap = Map<Npa, Nxx[]>;
+export type NpaNxxData = {
+    clliExtended: string;
+    nxx: Nxx;
+};
+export type NpaMap = Map<Npa, NpaNxxData[]>;
 
 export type WireCenter = {
     clli: string;

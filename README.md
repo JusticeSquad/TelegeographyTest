@@ -38,3 +38,7 @@ Once the packages are successfully installed, use the following to run the devel
 To create a new production build, run the following command:
 
 `pnpm run build`
+
+# Configuration
+
+The app uses a `.env` file to configure the Mapbox access token. I've provided my own access token, but should you prefer to build the app with your own, you can change the `MAPBOX_ACCESS_TOKEN` environment variable to use your own access token.

@@ -24,11 +24,6 @@ const parseClliLatLonData = (fileContent: string): Map<string, GlobalPos> => {
   for (const line of lineList) {
     const trimmedLine = line.trim();
 
-    // Skip empty lines
-    // if (!trimmedLine) {
-    //     continue;
-    // }
-
     const parts = trimmedLine.split("\t");
     if (parts.length !== 3) {
       console.warn(`${line} -> invalid format`);
@@ -59,7 +54,6 @@ const parseClliNpaNxxData = (
 
   for (const line of lines) {
     const trimmedLine = line.trim();
-    // if (!trimmedLine) continue; // Skip empty lines
 
     const parts = trimmedLine.split("|");
     if (parts.length !== 3) {
@@ -119,15 +113,6 @@ const parseClliNpaNxxData = (
   return npaMap;
 };
 
-// const getMatchingClliList = (
-//   latLonClli: string,
-//   npaNxxClliList: string[],
-// ): string[] => {
-//   const clliList: string[] = [];
-
-//   return clliList;
-// };
-
 const combineNpaNxxData = (
   clli: string,
   globalPos: GlobalPos,
@@ -168,7 +153,6 @@ const combineWireCenterData = (
   coordsMap: Map<string, GlobalPos>,
   npaNxxMap: Map<string, NpaMap>
 ): WireCenter[] => {
-  // const wireCenters: WireCenter[] = [];
   const wireCenterMap = new Map<string, WireCenter>();
 
   for (const [clliExtended, npaMap] of npaNxxMap) {
@@ -192,29 +176,6 @@ const combineWireCenterData = (
       });
     }
   }
-  // Loop through CLLI's
-  // for (const [clli, coords] of coordsMap) {
-  //   // Get NPA/NXX data related to current CLLI
-  //   const npaData = npaMap.get(clli) || new Map<Npa, NpaNxxData[]>();
-
-  //   wireCenters.push({
-  //     clli,
-  //     npaMap: npaData,
-  //     globalPos: coords,
-  //   });
-  // }
-
-  // Log any CLLIs that have NPA-NXX data but no coordinates
-  // for (const clli of npaMap.keys()) {
-  //   if (!coordsMap.has(clli)) {
-  //     console.warn(`CLLI ${clli} has NPA-NXX data but no coordinates`);
-  //   }
-  // }
-
-  console.log("-----------");
-  console.log(coordsMap);
-  console.log(npaNxxMap);
-  console.log(Array.from(wireCenterMap.values()));
-
+  
   return Array.from(wireCenterMap.values());
 };

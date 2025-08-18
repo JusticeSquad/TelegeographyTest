@@ -1,5 +1,4 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import WireCenterContext from "../state/WireCenterContext";
 import Typography from "@mui/material/Typography";
 import useWireCenterContext from "../state/WireCenterContext";
 import {
@@ -16,7 +15,6 @@ import { getCountByClli } from "../utils/wireCenterCount";
 import { getWireCenterColor } from "../utils/colorScale";
 
 const WireCenterDataTable: React.FC = () => {
-  // const wireCenterContextData = useContext(WireCenterContext);
   const wireCenterContextData = useWireCenterContext();
 
   if (wireCenterContextData === undefined) {
@@ -31,9 +29,6 @@ const WireCenterDataTable: React.FC = () => {
     <Card id="wire-center-data-table-panel">
       <CardContent>
         {wireCenterContextData.wireCenterDisplayList.map((wc) => (
-          // <Typography key={wc.clli}>
-          //     {wc.clli} - {(typeof wc.globalPos.lon === "number" && typeof wc.globalPos.lat === "number") ? `${wc.globalPos.lon.toFixed(2)}, ${wc.globalPos.lat.toFixed(2)}` : "error"}
-          // </Typography>
           <Accordion key={wc.clli}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <div className="wire-center-data-table-accordion-summary-container">

@@ -46,10 +46,6 @@ const WireCenterMap: React.FC = () => {
 
   return (
     <Box id="wire-center-map-panel">
-      {/* <div>
-        Selected: {selectedWireCenter ? selectedWireCenter.clli : "null"}
-        {`${viewState.longitude?.toFixed(2)}, ${viewState.latitude?.toFixed(2)}`}
-      </div> */}
       <div id="wire-center-map-wrapper">
         <Map
           ref={mapRef}
@@ -66,28 +62,7 @@ const WireCenterMap: React.FC = () => {
               latitude={wc.globalPos.lat}
               anchor="bottom"
             >
-              {/* <div
-                style={{
-                  transform: `scale(${Math.max(
-                    0.5,
-                    Math.min(
-                      1.5,
-                      viewState.zoom !== undefined ? viewState.zoom / 10 : 1.5
-                    )
-                  )})`,
-                  transformOrigin: "center bottom",
-                }}
-              > */}
               <div onClick={(e) => handleMarkerClick(e, wc)}>
-                {/* <svg width="24" height="24" viewBox="0 0 24 24">
-                  <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    fill={getWireCenterColor(wc, wireCenterContextData.wireCenterList)}
-                    stroke="white"
-                    strokeWidth="2"
-                  />
-                  <circle cx="12" cy="9" r="3" fill="white" />
-                </svg> */}
                 <Place sx={{ color: getWireCenterColor(wc, wireCenterContextData.wireCenterList) }} />
               </div>
             </Marker>

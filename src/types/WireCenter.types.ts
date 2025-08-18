@@ -18,3 +18,8 @@ export type WireCenter = {
     npaMap: NpaMap;
     globalPos: GlobalPos;
 };
+
+export type FilterWireCenterData = {
+    filterClliList: string[];
+    filterNpaList: Npa[];
+}

@@ -59,7 +59,7 @@ const WireCenterMap: React.FC = () => {
           mapStyle="mapbox://styles/mapbox/streets-v12"
           onMove={handleMapMove}
         >
-          {wireCenterContextData.wireCenterList.map((wc) => (
+          {wireCenterContextData.wireCenterDisplayList.map((wc) => (
             <Marker
               key={wc.clli}
               longitude={wc.globalPos.lon}

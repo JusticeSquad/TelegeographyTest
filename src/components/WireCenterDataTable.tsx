@@ -30,7 +30,7 @@ const WireCenterDataTable: React.FC = () => {
   return (
     <Card id="wire-center-data-table-panel">
       <CardContent>
-        {wireCenterContextData.wireCenterList.map((wc) => (
+        {wireCenterContextData.wireCenterDisplayList.map((wc) => (
           // <Typography key={wc.clli}>
           //     {wc.clli} - {(typeof wc.globalPos.lon === "number" && typeof wc.globalPos.lat === "number") ? `${wc.globalPos.lon.toFixed(2)}, ${wc.globalPos.lat.toFixed(2)}` : "error"}
           // </Typography>

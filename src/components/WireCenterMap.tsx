@@ -41,7 +41,7 @@ const WireCenterMap: React.FC = () => {
         {`${viewState.longitude?.toFixed(2)}, ${viewState.latitude?.toFixed(2)}`}
       </div> */}
       <div id="wire-center-map-wrapper">
-        <Map
+        {!process.env.DISABLE_MAP && <Map
           mapboxAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
           {...viewState}
           style={{ width: "100%", height: "400px" }}
@@ -95,7 +95,7 @@ const WireCenterMap: React.FC = () => {
               </div>
             </Popup>
           )}
-        </Map>
+        </Map>}
       </div>
     </Box>
   );

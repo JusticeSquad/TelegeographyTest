@@ -18,8 +18,11 @@ export const getWireCenterColor = (
     wireCenter: WireCenter,
     wireCenterList: WireCenter[],
 ): string => {
-    let count: number | null = null;
     const firstCount = getCountByClli(wireCenterList[0]);
+    let count: number | null =
+        wireCenterList[0].clli === wireCenter.clli ?
+        firstCount :
+        null;
     let countMax: number = firstCount;
     let countMin: number = firstCount;
     
@@ -38,8 +41,11 @@ export const getWireCenterColor = (
     // TODO: Proper error handling
     // For now, just return the lowest color scale
     if (count === null) {
+        console.error(`${wireCenter.clli} -> ${countMin}, ${countMax}`)
         return COLOR_SCALE[0];
     }
 
-    return COLOR_SCALE[Math.floor(count / (countMax - countMin) * COLOR_SCALE.length)];
+    return COLOR_SCALE[Math.min(
+        Math.floor((count - countMin) / (countMax - countMin) * COLOR_SCALE.length),
+        COLOR_SCALE.length - 1)];
 };

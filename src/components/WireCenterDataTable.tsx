@@ -10,7 +10,7 @@ import {
   CardContent,
 } from "@mui/material";
 import Place from "@mui/icons-material/Place";
-import { Npa, NpaNxxData, Nxx } from "../types/WireCenter.types";
+import { Npa, NpaNxxData } from "../types/WireCenter.types";
 import { getCountByClli } from "../utils/wireCenterCount";
 import { getWireCenterColor } from "../utils/colorScale";
 

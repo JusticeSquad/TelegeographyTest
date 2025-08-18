@@ -15,13 +15,12 @@ body {
 #wire-center-data-table-panel {
     flex: 0 1 400px;
     min-width: 200px;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 #wire-center-map-panel {
     flex: 1 1 0;
-
-    border: 1px solid black;
-    border-radius: 4px;
 }
 
 .wire-center-data-table-accordion-summary-container {
@@ -44,6 +43,7 @@ body {
 
 #wire-center-map-wrapper {
     overflow: hidden;
+    box-shadow: var(--elevation-shadow);
 }
 
 @media (max-width: 800px) {

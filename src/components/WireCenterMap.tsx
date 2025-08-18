@@ -9,6 +9,8 @@ import Map, {
 } from "react-map-gl/mapbox";
 import useWireCenterContext from "../state/WireCenterContext";
 import { WireCenter } from "../types/WireCenter.types";
+import { getWireCenterColor } from "../utils/colorScale";
+import { getCountByClli } from "../utils/wireCenterCount";
 
 const WireCenterMap: React.FC = () => {
   const wireCenterContextData = useWireCenterContext();
@@ -41,7 +43,7 @@ const WireCenterMap: React.FC = () => {
         {`${viewState.longitude?.toFixed(2)}, ${viewState.latitude?.toFixed(2)}`}
       </div> */}
       <div id="wire-center-map-wrapper">
-        {!process.env.DISABLE_MAP && <Map
+        <Map
           mapboxAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
           {...viewState}
           style={{ width: "100%", height: "400px" }}
@@ -71,7 +73,7 @@ const WireCenterMap: React.FC = () => {
                 <svg width="24" height="24" viewBox="0 0 24 24">
                   <path
                     d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    fill="#3B82F6"
+                    fill={getWireCenterColor(wc, wireCenterContextData.wireCenterList)}
                     stroke="white"
                     strokeWidth="2"
                   />
@@ -91,11 +93,11 @@ const WireCenterMap: React.FC = () => {
             >
               <div className="wire-center-map-popup-content-wrapper">
                 <Typography>{selectedWireCenter.clli}</Typography>
-                <Typography>60</Typography>
+                <Typography>Count - {getCountByClli(selectedWireCenter)}</Typography>
               </div>
             </Popup>
           )}
-        </Map>}
+        </Map>
       </div>
     </Box>
   );

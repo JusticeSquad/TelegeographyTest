@@ -30,7 +30,32 @@ const FilterPanel: React.FC = () => {
     if (selectedOption !== null) {
       const isNpa = /^\d{3}$/.test(selectedOption);
       wireCenterContextData.addFilter(selectedOption, !isNpa);
-      setFilterInput("");
+    }
+
+    setFilterInput("");
+  };
+
+  const handleInputChange = (event: any, newInputValue: string) => {
+    setFilterInput(newInputValue);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      const allOptions = [
+        ...remainingFilterOptions.filterClliList,
+        ...remainingFilterOptions.filterNpaList,
+      ];
+      
+      const matchingOption = allOptions.find(option => 
+        option.toLowerCase().includes(filterInput.toLowerCase())
+      );
+      
+      if (matchingOption) {
+        const isNpa = /^\d{3}$/.test(matchingOption);
+        wireCenterContextData.addFilter(matchingOption, !isNpa);
+        setFilterInput("");
+        event.preventDefault();
+      }
     }
   };
 
@@ -41,7 +66,7 @@ const FilterPanel: React.FC = () => {
   return (
     <Card id="filter-panel-container">
       <Box id="filter-panel-filter-container">
-        <Typography>Filter Wire Centers:</Typography>
+        <Typography variant="h5">Filter Wire Centers:</Typography>
 
         <Autocomplete
           disablePortal
@@ -49,11 +74,15 @@ const FilterPanel: React.FC = () => {
             ...remainingFilterOptions.filterClliList,
             ...remainingFilterOptions.filterNpaList,
           ]}
-          onInputChange={(e, newInputValue) => setFilterInput(newInputValue)}
+          getOptionLabel={(option) => option}
+          inputValue={filterInput}
+          onInputChange={handleInputChange}
           onChange={handleAutocompleteChange}
-          value={filterInput}
-          renderInput={(params) => <TextField {...params} />}
+          value={null}
+          renderInput={(params) => <TextField {...params} onKeyDown={handleKeyDown} placeholder="Enter CLLI or NPA" />}
           noOptionsText="No matching CLLIs or NPAs"
+          clearOnEscape
+          forcePopupIcon={false}
         />
       </Box>
 

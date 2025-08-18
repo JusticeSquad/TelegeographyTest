@@ -12,6 +12,7 @@ import {
 import Place from "@mui/icons-material/Place";
 import { Npa, NpaNxxData, Nxx } from "../types/WireCenter.types";
 import { getCountByClli } from "../utils/wireCenterCount";
+import { getWireCenterColor } from "../utils/colorScale";
 
 const WireCenterDataTable: React.FC = () => {
   // const wireCenterContextData = useContext(WireCenterContext);
@@ -32,7 +33,10 @@ const WireCenterDataTable: React.FC = () => {
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <div className="wire-center-data-table-accordion-summary-container">
                 <div className="wire-center-data-table-accordion-summary-title-container">
-                  <Place className="wire-center-data-table-accordion-summary-map-icon" />
+                  <Place
+                    className="wire-center-data-table-accordion-summary-map-icon"
+                    sx={{ color: getWireCenterColor(wc) }}
+                  />
                   <Typography>{wc.clli}</Typography>
                 </div>
                 <Typography>{getCountByClli(wc)}</Typography>

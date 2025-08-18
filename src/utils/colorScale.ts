@@ -14,15 +14,32 @@ const COLOR_SCALE = [
   "#0D47A1",
 ] as const;
 
-const COLOR_SCALE_MAX = 400;
-const COLOR_SCALE_SPLIT = 50;
+export const getWireCenterColor = (
+    wireCenter: WireCenter,
+    wireCenterList: WireCenter[],
+): string => {
+    let count: number | null = null;
+    const firstCount = getCountByClli(wireCenterList[0]);
+    let countMax: number = firstCount;
+    let countMin: number = firstCount;
+    
+    // TODO: Cache this calculation
+    for (const wc of wireCenterList.slice(1)) {
+        const clliCount = getCountByClli(wc);
+        
+        countMax = Math.max(countMax, clliCount);
+        countMin = Math.min(countMin, clliCount);
 
-export const getWireCenterColor = (wireCenter: WireCenter): string => {
-    const count = getCountByClli(wireCenter);
-
-    if (count >= COLOR_SCALE_MAX) {
-        return COLOR_SCALE[9];
+        if (wc.clli === wireCenter.clli) {
+            count = clliCount;
+        }
     }
 
-    return COLOR_SCALE[Math.floor(count / COLOR_SCALE_SPLIT)];
+    // TODO: Proper error handling
+    // For now, just return the lowest color scale
+    if (count === null) {
+        return COLOR_SCALE[0];
+    }
+
+    return COLOR_SCALE[Math.floor(count / (countMax - countMin) * COLOR_SCALE.length)];
 };

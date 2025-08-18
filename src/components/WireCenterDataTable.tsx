@@ -35,7 +35,7 @@ const WireCenterDataTable: React.FC = () => {
                 <div className="wire-center-data-table-accordion-summary-title-container">
                   <Place
                     className="wire-center-data-table-accordion-summary-map-icon"
-                    sx={{ color: getWireCenterColor(wc) }}
+                    sx={{ color: getWireCenterColor(wc, wireCenterContextData.wireCenterList) }}
                   />
                   <Typography>{wc.clli}</Typography>
                 </div>

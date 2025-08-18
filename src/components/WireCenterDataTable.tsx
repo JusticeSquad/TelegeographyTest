@@ -6,11 +6,12 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Button,
   Card,
   CardContent,
 } from "@mui/material";
 import Place from "@mui/icons-material/Place";
-import { Npa, NpaNxxData } from "../types/WireCenter.types";
+import { Npa, NpaNxxData, WireCenter } from "../types/WireCenter.types";
 import { getCountByClli } from "../utils/wireCenterCount";
 import { getWireCenterColor } from "../utils/colorScale";
 
@@ -20,6 +21,10 @@ const WireCenterDataTable: React.FC = () => {
 
   if (wireCenterContextData === undefined) {
     throw new Error();
+  }
+
+  const handlePanToWireCenter = (wireCenter: WireCenter): void => {
+    wireCenterContextData.panToWireCenter(wireCenter);
   }
 
   return (
@@ -43,6 +48,13 @@ const WireCenterDataTable: React.FC = () => {
               </div>
             </AccordionSummary>
             <AccordionDetails>
+              <div className="wire-center-data-table-accordion-details-pan-btn">
+                <Button
+                  variant="contained"
+                  onClick={() => handlePanToWireCenter(wc)}>
+                  Pan to Wire Center
+                </Button>
+              </div>
               {wc.npaMap.keys().map((npa: Npa) => (
                 <Accordion key={`${wc.clli}-${npa}`}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>

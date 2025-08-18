@@ -41,6 +41,11 @@ body {
     cursor: pointer;
 }
 
+.wire-center-data-table-accordion-details-pan-btn {
+    margin-bottom: 8px;
+    text-align: center;
+}
+
 #wire-center-map-wrapper {
     overflow: hidden;
     box-shadow: var(--elevation-shadow);

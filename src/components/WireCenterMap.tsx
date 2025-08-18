@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Map, {
+  MapRef,
   Marker,
   Popup,
   ViewState,
@@ -21,6 +22,13 @@ const WireCenterMap: React.FC = () => {
     longitude: -75,
     zoom: 9,
   });
+  const mapRef = useRef<MapRef | null>(null);
+
+  useEffect(() => {
+    if (mapRef) {
+      wireCenterContextData?.setMapRef(mapRef);
+    }
+  }, [wireCenterContextData?.setMapRef, mapRef]);
 
   if (wireCenterContextData === undefined) {
     throw new Error();
@@ -44,6 +52,7 @@ const WireCenterMap: React.FC = () => {
       </div> */}
       <div id="wire-center-map-wrapper">
         <Map
+          ref={mapRef}
           mapboxAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
           {...viewState}
           style={{ width: "100%", height: "400px" }}

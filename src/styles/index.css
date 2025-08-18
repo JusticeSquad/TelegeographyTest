@@ -1,3 +1,12 @@
+:root {
+    --elevation-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+
+
+body {
+    background-color: #fafbfb;
+}
+
 #wire-center-content-panel {
     display: flex;
     gap: 20px;
@@ -6,9 +15,6 @@
 #wire-center-data-table-panel {
     flex: 0 1 400px;
     min-width: 200px;
-
-    border: 1px solid black;
-    border-radius: 4px;
 }
 
 #wire-center-map-panel {
@@ -16,6 +22,24 @@
 
     border: 1px solid black;
     border-radius: 4px;
+}
+
+.wire-center-data-table-accordion-summary-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wire-center-data-table-accordion-summary-title-container {
+    display: flex;
+}
+
+.wire-center-data-table-accordion-summary-title-container > .MuiTypography-root {
+    margin-left: 8px;
+}
+
+.wire-center-data-table-accordion-summary-map-icon {
+    cursor: pointer;
 }
 
 #wire-center-map-wrapper {
@@ -29,7 +53,7 @@
 }
 
 .mapboxgl-popup-content {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+    box-shadow: var(--elevation-shadow);
     border-radius: 4px;
 }
 

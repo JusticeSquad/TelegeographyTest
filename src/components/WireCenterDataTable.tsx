@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Place from "@mui/icons-material/Place";
 import { Npa, NpaNxxData, Nxx } from "../types/WireCenter.types";
+import { getCountByClli } from "../utils/wireCenterCount";
 
 const WireCenterDataTable: React.FC = () => {
   // const wireCenterContextData = useContext(WireCenterContext);
@@ -30,15 +31,18 @@ const WireCenterDataTable: React.FC = () => {
           <Accordion key={wc.clli}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <div className="wire-center-data-table-accordion-summary-container">
-                <Typography>{wc.clli}</Typography>
-                <Place className="wire-center-data-table-accordion-summary-map-icon" />
+                <div className="wire-center-data-table-accordion-summary-title-container">
+                  <Place className="wire-center-data-table-accordion-summary-map-icon" />
+                  <Typography>{wc.clli}</Typography>
+                </div>
+                <Typography>{getCountByClli(wc)}</Typography>
               </div>
             </AccordionSummary>
             <AccordionDetails>
               {wc.npaMap.keys().map((npa: Npa) => (
                 <Accordion key={`${wc.clli}-${npa}`}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography>{npa}</Typography>
+                        <Typography>{npa} - {wc.npaMap.get(npa)?.length ?? 0}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         {wc.npaMap.get(npa)?.map((npaNxxData: NpaNxxData) => (

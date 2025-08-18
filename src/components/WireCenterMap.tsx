@@ -12,6 +12,7 @@ import useWireCenterContext from "../state/WireCenterContext";
 import { WireCenter } from "../types/WireCenter.types";
 import { getWireCenterColor } from "../utils/colorScale";
 import { getCountByClli } from "../utils/wireCenterCount";
+import Place from "@mui/icons-material/Place";
 
 const WireCenterMap: React.FC = () => {
   const wireCenterContextData = useWireCenterContext();
@@ -37,7 +38,6 @@ const WireCenterMap: React.FC = () => {
   const handleMapMove = (e: ViewStateChangeEvent) => setViewState(e.viewState);
   const handleMarkerClick = (e: any, wireCenter: WireCenter) => {
     e.stopPropagation();
-    console.log(`---------- click ${wireCenter.clli}`);
     setSelectedWireCenter(wireCenter);
   };
   const handlePopupClose = () => {
@@ -79,7 +79,7 @@ const WireCenterMap: React.FC = () => {
                 }}
               > */}
               <div onClick={(e) => handleMarkerClick(e, wc)}>
-                <svg width="24" height="24" viewBox="0 0 24 24">
+                {/* <svg width="24" height="24" viewBox="0 0 24 24">
                   <path
                     d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
                     fill={getWireCenterColor(wc, wireCenterContextData.wireCenterList)}
@@ -87,7 +87,8 @@ const WireCenterMap: React.FC = () => {
                     strokeWidth="2"
                   />
                   <circle cx="12" cy="9" r="3" fill="white" />
-                </svg>
+                </svg> */}
+                <Place sx={{ color: getWireCenterColor(wc, wireCenterContextData.wireCenterList) }} />
               </div>
             </Marker>
           ))}

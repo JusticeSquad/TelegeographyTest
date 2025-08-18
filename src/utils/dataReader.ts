@@ -1,18 +1,22 @@
-import { CLLI_PRIMARY_LENGTH, GlobalPos, NpaMap, NpaNxxData, WireCenter } from "../types/WireCenter.types";
+import {
+  CLLI_PRIMARY_LENGTH,
+  GlobalPos,
+  NpaMap,
+  NpaNxxData,
+  WireCenter,
+} from "../types/WireCenter.types";
 
 export const parseWireCenterData = (
   latLonContent: string,
   npaNxxContent: string
 ): WireCenter[] => {
   const coordsMap = parseClliLatLonData(latLonContent);
-  const npaMap = parseClliNpaNxxData(npaNxxContent, Array.from(coordsMap.keys()));
+  const npaMap = parseClliNpaNxxData(npaNxxContent);
 
   return combineWireCenterData(coordsMap, npaMap);
 };
 
-const parseClliLatLonData = (
-  fileContent: string
-): Map<string, GlobalPos> => {
+const parseClliLatLonData = (fileContent: string): Map<string, GlobalPos> => {
   const coordsMap = new Map<string, GlobalPos>();
 
   const lineList = fileContent.trim().split("\n");
@@ -36,9 +40,7 @@ const parseClliLatLonData = (
     const lon = parseFloat(lonStr);
 
     if (isNaN(lat) || isNaN(lon)) {
-      console.warn(
-        `${clli} -> invalid coordinates (${latStr}, ${lonStr})`
-      );
+      console.warn(`${clli} -> invalid coordinates (${latStr}, ${lonStr})`);
       continue;
     }
 
@@ -50,7 +52,6 @@ const parseClliLatLonData = (
 
 const parseClliNpaNxxData = (
   fileContent: string,
-  latLonClliList: string[],
 ): Map<string, NpaMap> => {
   const npaMap = new Map<string, NpaMap>();
 
@@ -74,6 +75,18 @@ const parseClliNpaNxxData = (
       continue;
     }
 
+    // Validate that this data isn't already present
+    const npaNxxMatchCb = (npaNxxData: NpaNxxData): boolean => {
+      return npaNxxData.clliExtended === clli && npaNxxData.nxx === nxx;
+    }
+    if (
+      npaMap.has(clli) &&
+      npaMap.get(clli)?.has(npa) &&
+      npaMap.get(clli)?.get(npa)?.find(npaNxxMatchCb) !== undefined) {
+        console.warn(`${clli} | ${npa}-${nxx} -> data already present, ignoring duplicate`);
+        continue;
+    }
+
     // Get or create the CLLI's NPA map
     if (!npaMap.has(clli)) {
       npaMap.set(clli, new Map<string, NpaNxxData[]>());
@@ -90,7 +103,7 @@ const parseClliNpaNxxData = (
 
     // Sanity check for undefined value
     if (!nxxArray) {
-        nxxArray = [];
+      nxxArray = [];
     }
 
     // Add NXX if not already present
@@ -112,16 +125,51 @@ const parseClliNpaNxxData = (
 // ): string[] => {
 //   const clliList: string[] = [];
 
-
-
 //   return clliList;
 // };
+
+const combineNpaNxxData = (
+  clli: string,
+  globalPos: GlobalPos,
+  npaMap: NpaMap,
+  wireCenterMap: Map<string, WireCenter>
+): void => {
+  const dupWireCenter = wireCenterMap.get(clli);
+
+  // If the value is somehow undefined, make the new wire center
+  if (dupWireCenter === undefined) {
+    wireCenterMap.set(clli, {
+      clli,
+      globalPos,
+      npaMap,
+    });
+
+    return;
+  }
+
+  for (const [npa, npaNxxData] of npaMap) {
+    // If the npa is missing, add the npaNxxData directly
+    if (!dupWireCenter.npaMap.has(npa)) {
+      dupWireCenter.npaMap.set(npa, npaNxxData);
+    } else {
+      const dupNpaNxxData = dupWireCenter.npaMap.get(npa);
+
+      if (dupNpaNxxData === undefined) {
+        dupWireCenter.npaMap.set(npa, npaNxxData);
+      }
+      else {
+        dupWireCenter.npaMap.set(npa, [...dupNpaNxxData, ...npaNxxData]);
+      }
+    }
+  }
+};
 
 const combineWireCenterData = (
   coordsMap: Map<string, GlobalPos>,
   npaNxxMap: Map<string, NpaMap>
 ): WireCenter[] => {
-  const wireCenters: WireCenter[] = [];
+  // const wireCenters: WireCenter[] = [];
+  const wireCenterMap = new Map<string, WireCenter>();
 
   for (const [clliExtended, npaMap] of npaNxxMap) {
     const clli: string = clliExtended.slice(0, CLLI_PRIMARY_LENGTH);
@@ -134,11 +182,15 @@ const combineWireCenterData = (
       continue;
     }
 
-    wireCenters.push({
-      clli,
-      globalPos,
-      npaMap,
-    });
+    if (wireCenterMap.has(clli)) {
+      combineNpaNxxData(clli, globalPos, npaMap, wireCenterMap);
+    } else {
+      wireCenterMap.set(clli, {
+        clli,
+        globalPos,
+        npaMap,
+      });
+    }
   }
   // Loop through CLLI's
   // for (const [clli, coords] of coordsMap) {
@@ -159,5 +211,10 @@ const combineWireCenterData = (
   //   }
   // }
 
-  return wireCenters;
-}
+  console.log("-----------");
+  console.log(coordsMap);
+  console.log(npaNxxMap);
+  console.log(Array.from(wireCenterMap.values()));
+
+  return Array.from(wireCenterMap.values());
+};
